@@ -1,3 +1,4 @@
+
 name: Build Windows exe
 
 on:
@@ -11,13 +12,14 @@ on:
       - "assets/**"
       - "tests/**"
       - ".github/workflows/build-exe.yml"
+
   workflow_dispatch:
     inputs:
       version:
-        description: "Release version (for example v1.0.0)"
+        description: "Release version (for example v1.0.1)"
         required: true
         type: string
-        default: "v1.0.0"
+        default: "v1.0.1"
 
 permissions:
   contents: write
@@ -25,6 +27,7 @@ permissions:
 jobs:
   build:
     runs-on: windows-latest
+
     steps:
       - name: Check out source
         uses: actions/checkout@v4
@@ -52,6 +55,8 @@ jobs:
           --name COGNIX-ImageLab
           --icon assets/COGNIX.ico
           --collect-all customtkinter
+          --collect-all PIL
+          --collect-all numpy
           --hidden-import PIL._tkinter_finder
           --add-data "assets;assets"
           main.py
